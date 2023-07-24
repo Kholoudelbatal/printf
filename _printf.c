@@ -51,14 +51,48 @@ int _printf(const char *format, ...)
                                 put_char('%');
                                 printed_chars++;
                                 break;
-                        default:
+			case 'i':
+			case 'd':
+				{
+					int m = va_arg(args, int);
+					int x = 0;
+					int temp = m;
+
+					if (m < 0)
+					{
+						put_char('-');
+						printed_chars++;
+						m = -m;
+					}
+
+					do
+					{
+						x++;
+						temp /= 10;
+					}
+					while (temp);
+					
+					temp = m;
+					do
+					{
+						int digit = temp % 10;
+
+						put_char('0' + digit);
+						printed_chars++;
+						temp /= 10;
+					}
+					while (--x > 0);
+					break;
+
+			default:
 
                                 put_char('%');
                                 put_char(*format);
                                 printed_chars += 2;
                                 break;
-                        }
+				}
                 }
+		}
                 else
                 {
 
