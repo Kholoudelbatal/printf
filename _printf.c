@@ -21,8 +21,8 @@ int _printf(const char *format, ...)
 		{
 			format++;
 
-			switch (*format)
-			{
+		switch (*format)
+		{
 
 			case 'c':
 				put_char((char)va_arg(args, int));
@@ -30,11 +30,11 @@ int _printf(const char *format, ...)
 				break;
 
 			case 's':
-				{
-					int l;
-					char *st = va_arg(args, char *);
+			{
+				int l;
+				char *st = va_arg(args, char *);
 
-					if (st == NUll)
+				if (st == NULL)
 					st = "(NULL)";
 
 				for (l = 0; st[l]; l++)
@@ -44,7 +44,7 @@ int _printf(const char *format, ...)
 				}
 				break;
 
-				}
+			}
 
 			case '%':
 				put_char('%');
@@ -64,22 +64,26 @@ int _printf(const char *format, ...)
 						m = -m;
 					}
 
-					do {
+					do
+
+					{
 						x++;
 						temp /= 10;
 					}
 
 					while (temp);
+					temp = m;
 
-					do {
+					do
+
+					{
+
 						int digit = temp % 10;
 
 						put_char('0' + digit);
 						printed_chars++;
 						temp /= 10;
-					}
-
-					while (--x > 0);
+					} while (--x > 0);
 					break;
 
 			default:
