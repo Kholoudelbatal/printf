@@ -1,66 +1,87 @@
 #include "main.h"
 
-void print_buffer(char buffer[], int *buff_ind);
+int put_char(char c);
 
 /**
- * _printf - printf cp function
- * @format: format of string
- * Return: printed characters
- */
+ * _printf - function prints a formated string
+ * @format: the string format
+ * @...: number of variable arguments
+ * Return: number of printed chars
+*/
 int _printf(const char *format, ...)
 {
-	int i, printed = 0, printed_chars = 0;
-	int flags, width, precision, size, buff_ind = 0;
-	va_list list;
-	char buffer[BUFF_SIZE];
+	int printed_chars = 0;
 
-	if (format == NULL)
-		return (-1);
+	va_list args;
 
-	va_start(list, format);
+	va_start(args, format);
 
-	for (i = 0; format && format[i] != '\0'; i++)
+	while (*format)
 	{
-		if (format[i] != '%')
+		if (*format == '%')
 		{
-			buffer[buff_ind++] = format[i];
-			if (buff_ind == BUFF_SIZE)
-				print_buffer(buffer, &buff_ind);
-			/* write(1, &format[i], 1);*/
-			printed_chars++;
+			format++;
+
+		switch (*format)
+		{
+
+			case 'c':
+				put_char((char)va_arg(args, int));
+				printed_chars++;
+				break;
+
+			case 's':
+			{
+				int l;
+				char *st = va_arg(args, char *);
+
+				if (st == NULL)
+					st = "(NULL)";
+
+				for (l = 0; st[l]; l++)
+				{
+					put_char(st[l]);
+					printed_chars++;
+				}
+				break;
+
+			}
+
+			case '%':
+				put_char('%');
+				printed_chars++;
+				break;
+			default:
+
+				put_char('%');
+				put_char(*format);
+				printed_chars += 2;
+				break;
+			}
 		}
 		else
 		{
-			print_buffer(buffer, &buff_ind);
-			flags = get_flags(format, &i);
-			width = get_width(format, &i, list);
-			precision = get_precision(format, &i, list);
-			size = get_size(format, &i);
-			++i;
-			printed = handle_print(format, &i, list, buffer,
-				flags, width, precision, size);
-			if (printed == -1)
-				return (-1);
-			printed_chars += printed;
+
+			put_char(*format);
+			printed_chars++;
 		}
+
+			format++;
 	}
 
-	print_buffer(buffer, &buff_ind);
-
-	va_end(list);
+	va_end(args);
 
 	return (printed_chars);
+
 }
 /**
- * print_buffer - print content of buffer if existed
- * @buffer: array of characters
- * @buff_ind: Index represent the length
- */
-void print_buffer(char buffer[], int *buff_ind)
+ * put_char - prints char c to stdout
+ * @c: the character to print
+ * Return: On success 1
+ *		On error, -1 is returned, and errno iss set appropriatly
+*/
+int put_char(char c)
 {
-	if (*buff_ind > 0)
-		write(1, &buffer[0], *buff_ind);
-
-	*buff_ind = 0;
+	return (write(1, &c, 1));
 }
 
