@@ -7,15 +7,15 @@
 #include <stdarg.h>
 #include <limits.h>
 /**
-* struct convert - structure for symbols and functions
-*
-* @sym: symbol
-* @f: related function
-*/
+ * struct convert - structure for symbols and functions
+ *
+ * @sym: symbol
+ * @f: related function
+ */
 struct convert
 {
-        char *sym;
-        int (*f)(va_list);
+	char *sym;
+	int (*f)(va_list);
 };
 typedef struct convert conver_t;
 
