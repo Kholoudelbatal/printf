@@ -13,13 +13,14 @@ int _printf(const char *format, ...)
 	int printed_chars = 0;
 
 	va_list args;
+
 	va_start(args, format);
-	
+
 	if (!format || (format[0] == '%' && !format[1]))
 	{
-		 return (-1);
+		return (-1);
 	}
-	if (format[0] == '%' && format[1] == ' ' && !format[2])	
+	if (format[0] == '%' && format[1] == ' ' && !format[2])
 	{
 		return (-1);
 	}
@@ -35,6 +36,7 @@ int _printf(const char *format, ...)
 				case 'c':
 					{
 						char c = (char)va_arg(args, int);
+
 						put_char(c);
 						printed_chars++;
 						break;
@@ -43,15 +45,16 @@ int _printf(const char *format, ...)
 				case 's':
 					{
 						char *str = va_arg(args, char *);
-						if (str == NULL)
-							str = "(NULL)";
 
-						for (; *str; str++)
-						{
-							put_char(*str);
-							printed_chars++;
-						}
-						break;
+					if (str == NULL)
+						str = "(NULL)";
+
+					for (; *str; str++)
+					{
+						put_char(*str);
+						printed_chars++;
+					}
+					break;
 					}
 
 				case '%':
@@ -66,29 +69,26 @@ int _printf(const char *format, ...)
 						int digits = 0;
 						int temp = num;
 
-						if (num < 0)
-						{
-							put_char('-');
-							printed_chars++;
-							num = -num;
-						}
+					if (num < 0)
+					{
+						put_char('-');
+						printed_chars++;
+						num = -num;
+					}
 
-						do
-						{
-							digits++;
-							temp /= 10;
-						} while (temp);
+					do {
+						digits++;
+						temp /= 10;
+					} while (temp);
+					temp = num;
+					do {
+						int digit = temp % 10;
 
-						temp = num;
-						do
-						{
-							int digit = temp % 10;
-							put_char('0' + digit);
-							printed_chars++;
-							temp /= 10;
-						} while (--digits > 0);
-
-						break;
+						put_char('0' + digit);
+						printed_chars++;
+						temp /= 10;
+					} while (--digits > 0);
+					break;
 					}
 
 				default:
@@ -109,7 +109,7 @@ int _printf(const char *format, ...)
 
 	va_end(args);
 
-	return printed_chars;
+	return (printed_chars);
 }
 
 /**
@@ -120,6 +120,6 @@ int _printf(const char *format, ...)
  */
 int put_char(char c)
 {
-	return write(1, &c, 1);
+	return (write(1, &c, 1));
 }
 
