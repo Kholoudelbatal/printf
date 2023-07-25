@@ -2,9 +2,9 @@
 /**
  * formater - analyize specifiers to format a sting
  * @format: string formated
- * f_list: functions list
- * arg_list: arguments list
- * Return: number of printed characters
+ *f_list: functions list for task 0
+ *arg_list: arguments list for task 0
+ *Return: number of printed characters
 */
 int formater(const char *format, conver_t f_list[], va_list arg_list)
 {
