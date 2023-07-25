@@ -46,9 +46,9 @@ int print_prcnt(__attribute__((unused))va_list list)
 */
 int print_integer(va_list list)
 {
-	int num_length;
+	int num_len;
 
-	num_length = print_num(list);
-	return (num_length);
+	num_len = print_num(list);
+	return (num_len);
 }
 
