@@ -5,3 +5,4 @@ main.h : Header file
 _printf.c : printf function
 printnum.c
 putchar.c
+main.h
