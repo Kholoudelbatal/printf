@@ -6,4 +6,4 @@ _printf.c : printf function
 printnum.c
 putchar.c
 main.h
-we had tested some different   
+we had tested some different codes 
